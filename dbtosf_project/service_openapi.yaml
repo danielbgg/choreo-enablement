@@ -35,6 +35,22 @@ paths:
               schema:
                 type: string
   /contacts:
+    get:
+      summary: A resource for fetching contacts from salesforce
+      operationId: getContacts
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactsOutput'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
     post:
       summary: A resource for transforming contacts
       operationId: postContacts
@@ -78,9 +94,15 @@ components:
         LastName:
           type: string
         Email:
-          type: string
+          nullable: true
+          oneOf:
+          - {}
+          - type: string
         Phone:
-          type: string
+          nullable: true
+          oneOf:
+          - {}
+          - type: string
     ContactsOutput:
       required:
       - contacts
@@ -115,9 +137,15 @@ components:
         fullName:
           type: string
         phoneNumber:
-          type: string
+          nullable: true
+          oneOf:
+          - {}
+          - type: string
         email:
-          type: string
+          nullable: true
+          oneOf:
+          - {}
+          - type: string
         id:
           type: string
     ContactsInput:
