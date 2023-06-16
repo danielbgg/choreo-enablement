@@ -34,4 +34,105 @@ paths:
             text/plain:
               schema:
                 type: string
-components: {}
+  /contacts:
+    post:
+      summary: A resource for transforming contacts
+      operationId: postContacts
+      requestBody:
+        description: the input contacts
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactsInput'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactsOutput'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    RecordsItem:
+      required:
+      - Email
+      - FirstName
+      - Id
+      - LastName
+      - Phone
+      - attributes
+      type: object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+        Id:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Email:
+          type: string
+        Phone:
+          type: string
+    ContactsOutput:
+      required:
+      - contacts
+      - numberOfContacts
+      type: object
+      properties:
+        numberOfContacts:
+          type: integer
+          format: int64
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsItem'
+    Attributes:
+      required:
+      - type
+      - url
+      type: object
+      properties:
+        type:
+          type: string
+        url:
+          type: string
+    ContactsItem:
+      required:
+      - email
+      - fullName
+      - id
+      - phoneNumber
+      type: object
+      properties:
+        fullName:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+    ContactsInput:
+      required:
+      - done
+      - records
+      - totalSize
+      type: object
+      properties:
+        totalSize:
+          type: integer
+          format: int64
+        done:
+          type: boolean
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecordsItem'
